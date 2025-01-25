@@ -1,29 +1,28 @@
-# backend/models/stock_price_model.py
+
+
 import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import classification_report, confusion_matrix
 import joblib
+import os
 
 # Load the dataset
-data = pd.read_csv('ITC.csv')
+df = pd.read_csv('C:\\Users\\aryan\\Desktop\\Tensor\\Tensor-Titans\\backend\\models\\ITC.csv') # Replace with your stock price dataset
 
-# Add derived columns
-data['Daily_Return'] = (data['Close'] - data['Open']) / data['Open'] * 100
-data['MA_5'] = data['Close'].rolling(window=5).mean()
-data['MA_10'] = data['Close'].rolling(window=10).mean()
-data['Price_Up'] = (data['Close'].shift(-1) > data['Close']).astype(int)
+# Feature engineering
+df['Daily_Return'] = (df['Close'] - df['Open']) / df['Open'] * 100
+df['MA_5'] = df['Close'].rolling(window=5).mean()
+df['MA_10'] = df['Close'].rolling(window=10).mean()
+df['Price_Up'] = (df['Close'].shift(-1) > df['Close']).astype(int)
 
-# Drop NaN values after rolling calculations
-data = data.dropna()
+# Drop NaN values
+df = df.dropna()
 
 # Define features and target
-features = data[['Open', 'High', 'Low', 'Close', 'Volume', 'Daily_Return', 'MA_5', 'MA_10']]
+features = df[['Open', 'High', 'Low', 'Close', 'Volume', 'Daily_Return', 'MA_5', 'MA_10']]
 X = features
-target = data['Price_Up']
-y = target
+y = df['Price_Up']
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
@@ -33,30 +32,15 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-# Initialize and train KNN model
+# Train KNN model
 knn = KNeighborsClassifier(n_neighbors=5)
 knn.fit(X_train, y_train)
 
 # Save the model and scaler
-joblib.dump(knn, 'stock_price_knn_model.pkl')
-joblib.dump(scaler, 'scaler.pkl')
+model_dir = 'models'
+os.makedirs(model_dir, exist_ok=True)
 
-# Function to predict stock price movement
-def predict_stock_movement(input_data):
-    # Load the saved model and scaler
-    model = joblib.load('stock_price_knn_model.pkl')
-    scaler = joblib.load('scaler.pkl')
+joblib.dump(knn, os.path.join(model_dir, 'stock_price_knn_model.pkl'))
+joblib.dump(scaler, os.path.join(model_dir, 'scaler.pkl'))
 
-    # Feature engineering for the new input
-    input_data['Daily_Return'] = (input_data['Close'] - input_data['Open']) / input_data['Open'] * 100
-    input_data['MA_5'] = data['Close'].rolling(window=5).mean().iloc[-1]  # Example for missing MA_5
-    input_data['MA_10'] = data['Close'].rolling(window=10).mean().iloc[-1]  # Example for missing MA_10
-
-    # Prepare features
-    new_features = input_data[['Open', 'High', 'Low', 'Close', 'Volume', 'Daily_Return', 'MA_5', 'MA_10']]
-    new_features_scaled = scaler.transform(new_features)  # Apply the same scaling used during training
-
-    # Make the prediction
-    prediction = model.predict(new_features_scaled)
-
-    return "increase" if prediction[0] == 1 else "decrease"
+print("Stock price model and scaler saved successfully.")

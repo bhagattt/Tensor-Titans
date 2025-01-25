@@ -1,3 +1,4 @@
+# backend/models/finance_goal_model.py
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -7,10 +8,9 @@ from sklearn.metrics import classification_report, accuracy_score
 import joblib
 
 # Load the dataset
-df = pd.read_csv('/data/financial_goals_dataset.csv')
+df = pd.read_csv('financial_goals_dataset.csv')
 
 # Preprocessing
-# Encode categorical variables
 categorical_columns = ['Age_Group', 'Income_Level', 'Primary_Financial_Goal', 'Risk_Tolerance']
 investment_columns = ['Stocks', 'Bonds', 'Real Estate', 'Mutual Funds', 'ETFs', 'Cryptocurrency']
 
@@ -98,28 +98,3 @@ def recommend_investment_strategy(age_group, income_level, financial_goal, risk_
         'strategy': strategy,
         'details': recommendations[strategy]
     }
-
-# Example usage
-sample_portfolio = {
-    'Stocks': 50,
-    'Bonds': 20,
-    'Real Estate': 10,
-    'Mutual Funds': 10,
-    'ETFs': 5,
-    'Cryptocurrency': 5
-}
-
-recommendation = recommend_investment_strategy(
-    age_group='36-45', 
-    income_level='Medium-High', 
-    financial_goal='Retirement', 
-    risk_tolerance='Balanced', 
-    current_portfolio=sample_portfolio
-)
-
-print("\nPersonalized Investment Recommendation:")
-print(f"Strategy: {recommendation['strategy']}")
-print(f"Description: {recommendation['details']['description']}")
-print("Recommended Allocation:")
-for asset, allocation in recommendation['details']['allocation'].items():
-    print(f"{asset}: {allocation}%")

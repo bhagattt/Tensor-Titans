@@ -6,217 +6,243 @@
     <title>Finance Flex - AI Financial Advisor</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2dd4bf;
+            --secondary: #6366f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        }
+        
+        .ai-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50">
     <!-- Landing Page -->
     <div id="landing-page">
         <!-- Header -->
-        <header class="gradient-bg text-white shadow-lg">
+        <header class="gradient-bg text-white shadow-lg fixed w-full z-50">
             <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="flex items-center">
-                    <img src="/api/placeholder/50/50" alt="Finance Flex Logo" class="h-10 w-10 mr-3">
-                    <h1 class="text-2xl font-bold">Finance Flex AI</h1>
+                <div class="flex items-center space-x-2">
+                    <img src="https://via.placeholder.com/50x50?text=FFAI" alt="Logo" class="w-10 h-10 rounded-lg">
+                    <span class="text-xl font-bold bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">
+                        FinanceFlex AI
+                    </span>
                 </div>
-                <div class="space-x-4">
-                    <a href="#features" class="hover:text-blue-200">Features</a>
-                    <a href="#market-insights" class="hover:text-blue-200">Market Insights</a>
-                    <a href="#learning-hub" class="hover:text-blue-200">Learning Hub</a>
-                    <button id="login-signup-btn" class="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 hover-scale">
-                        Login / Sign Up
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="hover:text-teal-400">Features</a>
+                    <a href="#insights" class="hover:text-teal-400">Insights</a>
+                    <a href="#learning" class="hover:text-teal-400">Learning</a>
+                    <button id="login-signup-btn" class="bg-teal-500 hover:bg-teal-600 px-6 py-2 rounded-full transition-all">
+                        Get Started
                     </button>
                 </div>
             </nav>
         </header>
 
         <!-- Hero Section -->
-        <section class="container mx-auto px-6 py-20 text-center">
-            <h1 class="text-5xl font-bold mb-6">Your AI-Powered Financial Companion 🚀</h1>
-            <p class="text-xl text-gray-600 mb-8">Optimize your investments, track market trends, and grow your wealth with Finance Flex AI.</p>
-            <button id="get-started-btn" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 hover-scale">
-                Get Started
-            </button>
+        <section class="pt-32 pb-20 container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h1 class="text-5xl font-bold mb-6 leading-tight">
+                        AI-Powered Wealth Management 
+                        <span class="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">
+                            Made Simple
+                        </span>
+                    </h1>
+                    <p class="text-gray-600 text-lg mb-8">
+                        Harness artificial intelligence to optimize your investments, predict market trends, and grow your wealth intelligently.
+                    </p>
+                    <button class="bg-teal-500 text-white px-8 py-4 rounded-full hover:bg-teal-600 transition-all">
+                        Start Free Trial
+                    </button>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://via.placeholder.com/600x400?text=AI+Financial+Dashboard" 
+                         alt="AI Dashboard" 
+                         class="rounded-2xl shadow-xl hover-scale">
+                </div>
+            </div>
         </section>
 
-        <!-- Features Section -->
-        <section id="features" class="container mx-auto px-6 py-12">
-            <h2 class="text-3xl font-bold text-center mb-8">Features</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale">
-                    <h3 class="text-xl font-semibold mb-4">📂 Portfolio Management</h3>
-                    <p class="text-gray-600">Upload your portfolio and get AI-driven investment recommendations.</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale">
-                    <h3 class="text-xl font-semibold mb-4">📈 Real-Time Market Insights</h3>
-                    <p class="text-gray-600">Stay ahead with dynamic market analysis and opportunity tracking.</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale">
-                    <h3 class="text-xl font-semibold mb-4">📚 Learning Hub</h3>
-                    <p class="text-gray-600">Learn the fundamentals of investing and advanced strategies.</p>
+        <!-- AI Features Section -->
+        <section id="features" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center mb-16">Smart Investment Features</h2>
+                <div class="grid md:grid-cols-3 gap-12">
+                    <div class="ai-card p-8 rounded-2xl">
+                        <div class="w-16 h-16 bg-teal-100 rounded-xl mb-6 flex items-center justify-center">
+                            <i class='bx bx-brain text-3xl text-teal-600'></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Predictive Analytics</h3>
+                        <p class="text-gray-600">Machine learning models analyze historical data to forecast market trends</p>
+                    </div>
+                    
+                    <div class="ai-card p-8 rounded-2xl">
+                        <div class="w-16 h-16 bg-purple-100 rounded-xl mb-6 flex items-center justify-center">
+                            <i class='bx bx-line-chart text-3xl text-purple-600'></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Portfolio Optimization</h3>
+                        <p class="text-gray-600">AI-driven asset allocation based on your risk profile and goals</p>
+                    </div>
+                    
+                    <div class="ai-card p-8 rounded-2xl">
+                        <div class="w-16 h-16 bg-blue-100 rounded-xl mb-6 flex items-center justify-center">
+                            <i class='bx bx-bot text-3xl text-blue-600'></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">24/7 Monitoring</h3>
+                        <p class="text-gray-600">Real-time market tracking and instant anomaly detection</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Market Insights Section -->
-        <section id="market-insights" class="bg-gray-50 py-12">
+        <section id="insights" class="py-20 bg-gray-50">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-8">📈 Real-Time Market Insights</h2>
-                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale">
-                    <div id="market-insights-content" class="text-gray-600">
-                        <p>Real-time market trends and opportunities will appear here. 🔍</p>
+                <h2 class="text-4xl font-bold text-center mb-12">Live Market Intelligence</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm">
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="ai-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">📈 Trending Assets</h3>
+                            <div id="trendingAssets" class="space-y-4">
+                                <!-- AI-generated content will be inserted here -->
+                            </div>
+                        </div>
+                        <div class="ai-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">🔍 AI Recommendations</h3>
+                            <div id="aiRecommendations" class="space-y-4">
+                                <!-- AI-generated recommendations will appear here -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Learning Hub Section -->
-        <section id="learning-hub" class="container mx-auto px-6 py-12">
-            <h2 class="text-3xl font-bold text-center mb-8">📚 Learning Hub</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale">
-                    <h3 class="text-xl font-semibold mb-4">🎯 Investment Basics</h3>
-                    <p class="text-gray-600">Learn the fundamentals of investing and how to get started. 💼</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale">
-                    <h3 class="text-xl font-semibold mb-4">🛡️ Risk Management</h3>
-                    <p class="text-gray-600">Understand how to manage risk and protect your investments. 🔒</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale">
-                    <h3 class="text-xl font-semibold mb-4">🚀 Advanced Strategies</h3>
-                    <p class="text-gray-600">Explore advanced investment strategies for maximizing returns. 📊</p>
+        <section id="learning" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center mb-16">AI-Powered Learning Hub</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="ai-card p-6 rounded-2xl hover-scale">
+                        <div class="aspect-video bg-gray-100 rounded-xl mb-4"></div>
+                        <h3 class="text-xl font-semibold mb-2">Smart Portfolio Basics</h3>
+                        <p class="text-gray-600">Learn how AI optimizes asset allocation</p>
+                        <div class="mt-4 flex items-center text-teal-600">
+                            <span>Start Learning</span>
+                            <i class='bx bx-chevron-right ml-2'></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Add more learning cards -->
                 </div>
             </div>
         </section>
 
         <!-- Footer -->
-        <footer class="bg-gray-900 text-white py-12">
-            <div class="container mx-auto px-6 text-center">
-                <p>&copy; 2024 Finance Flex AI. Democratizing Intelligent Investing. 🌍</p>
-                <div class="mt-4 space-x-4">
-                    <a href="#" class="text-gray-300 hover:text-white">Privacy Policy</a>
-                    <a href="#" class="text-gray-300 hover:text-white">AI Ethics</a>
-                    <a href="#" class="text-gray-300 hover:text-white">Contact Support</a>
-                </div>
+        <footer class="gradient-bg text-white py-12">
+            <div class="container mx-auto px-6">
+                <!-- Footer content -->
             </div>
         </footer>
     </div>
 
-    <!-- Login/Signup Page (Hidden by Default) -->
-    <div id="login-signup-page" class="hidden">
-        <div class="wrapper">
-            <span class="rotate-bg"></span>
-            <span class="rotate-bg2"></span>
-
-            <div class="form-box login">
-                <h2 class="title animation" style="--i:0; --j:21">Login</h2>
-                <form action="#">
-                    <div class="input-box animation" style="--i:1; --j:22">
-                        <input type="text" required>
-                        <label for="">Username</label>
-                        <i class='bx bxs-user'></i>
-                    </div>
-                    <div class="input-box animation" style="--i:2; --j:23">
-                        <input type="password" required>
-                        <label for="">Password</label>
-                        <i class='bx bxs-lock-alt'></i>
-                    </div>
-                    <button type="submit" class="btn animation" style="--i:3; --j:24" id="login-btn">Login</button>
-                    <div class="linkTxt animation" style="--i:5; --j:25">
-                        <p>Don't have an account? <a href="#" class="register-link">Sign Up</a></p>
-                    </div>
-                </form>
-            </div>
-
-            <div class="info-text login">
-                <h2 class="animation" style="--i:0; --j:20">Welcome Back! 👋</h2>
-                <p class="animation" style="--i:1; --j:21">Your AI-powered financial companion is here to help you grow your wealth. 💰</p>
-            </div>
-
-            <div class="form-box register">
-                <h2 class="title animation" style="--i:17; --j:0">Sign Up</h2>
-                <form action="#">
-                    <div class="input-box animation" style="--i:18; --j:1">
-                        <input type="text" required>
-                        <label for="">Username</label>
-                        <i class='bx bxs-user'></i>
-                    </div>
-                    <div class="input-box animation" style="--i:19; --j:2">
-                        <input type="email" required>
-                        <label for="">Email</label>
-                        <i class='bx bxs-envelope'></i>
-                    </div>
-                    <div class="input-box animation" style="--i:20; --j:3">
-                        <input type="password" required>
-                        <label for="">Password</label>
-                        <i class='bx bxs-lock-alt'></i>
-                    </div>
-                    <button type="submit" class="btn animation" style="--i:21;--j:4">Sign Up</button>
-                    <div class="linkTxt animation" style="--i:22; --j:5">
-                        <p>Already have an account? <a href="#" class="login-link">Login</a></p>
-                    </div>
-                </form>
-            </div>
-
-            <div class="info-text register">
-                <h2 class="animation" style="--i:17; --j:0;">Welcome! 🎉</h2>
-                <p class="animation" style="--i:18; --j:1;">Join Finance Flex AI and take control of your financial future. 🚀</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript -->
     <script>
-        // Landing Page Functionality
-        const landingPage = document.getElementById('landing-page');
-        const loginSignupPage = document.getElementById('login-signup-page');
-        const loginSignupBtn = document.getElementById('login-signup-btn');
-        const getStartedBtn = document.getElementById('get-started-btn');
-
-        // Redirect to Login/Signup Page
-        if (loginSignupBtn) {
-            loginSignupBtn.addEventListener('click', () => {
-                landingPage.classList.add('hidden');
-                loginSignupPage.classList.remove('hidden');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Market Chart
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'AI Market Index',
+                        data: [65, 59, 80, 81, 56, 55],
+                        borderColor: '#2dd4bf',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
             });
-        }
 
-        if (getStartedBtn) {
-            getStartedBtn.addEventListener('click', () => {
-                landingPage.classList.add('hidden');
-                loginSignupPage.classList.remove('hidden');
-            });
-        }
+            // Simulate AI-generated content
+            function generateAIContent() {
+                const trends = [
+                    { asset: 'Tech Stocks', change: '+5.2%', aiComment: 'AI predicts continued growth' },
+                    { asset: 'Crypto', change: '-2.1%', aiComment: 'Market correction expected' },
+                    { asset: 'Green Energy', change: '+3.8%', aiComment: 'Strong buy recommendation' }
+                ];
 
-        // Login/Signup Page Functionality
-        const wrapper = document.querySelector('.wrapper');
-        const registerLink = document.querySelector('.register-link');
-        const loginLink = document.querySelector('.login-link');
-        const loginBtn = document.getElementById('login-btn');
+                const recommendations = [
+                    'Increase allocation in emerging markets',
+                    'Diversify with renewable energy ETFs',
+                    'Consider short-term bonds for stability'
+                ];
 
-        if (registerLink) {
-            registerLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                wrapper.classList.add('active');
-            });
-        }
+                // Populate trending assets
+                const trendingDiv = document.getElementById('trendingAssets');
+                trends.forEach(trend => {
+                    trendingDiv.innerHTML += `
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <div>
+                                <strong>${trend.asset}</strong>
+                                <span class="text-sm ml-2">${trend.change}</span>
+                            </div>
+                            <span class="text-sm text-gray-600">${trend.aiComment}</span>
+                        </div>
+                    `;
+                });
 
-        if (loginLink) {
-            loginLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                wrapper.classList.remove('active');
-            });
-        }
+                // Populate recommendations
+                const recDiv = document.getElementById('aiRecommendations');
+                recommendations.forEach(rec => {
+                    recDiv.innerHTML += `
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                            <i class='bx bx-bot mr-3 text-teal-500'></i>
+                            ${rec}
+                        </div>
+                    `;
+                });
+            }
 
-        if (loginBtn) {
-            loginBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                alert('Login successful! Redirecting to dashboard...');
-                // Redirect to dashboard or perform other actions
-            });
-        }
+            generateAIContent();
+        });
     </script>
 </body>
 </html>
